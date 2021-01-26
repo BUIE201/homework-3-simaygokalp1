@@ -41,7 +41,6 @@ int findingMax(Node* root) {
 	return returnMax;
 }
 
-
 void maxarray(Node* pRoot, vector<int>& maxbranch) {
 
 	if (pRoot->pLeft && findingMax(pRoot->pLeft) > findingMax(pRoot->pRight)) {
@@ -49,13 +48,14 @@ void maxarray(Node* pRoot, vector<int>& maxbranch) {
 		maxbranch.push_back(pRoot->i);
 		maxarray(pRoot, maxbranch);
 	}
-	if (pRoot->pRight  && findingMax(pRoot->pLeft) < findingMax(pRoot->pRight)){
+	else if (pRoot->pRight && findingMax(pRoot->pLeft) < findingMax(pRoot->pRight)) {
 		pRoot = pRoot->pRight;
 		maxbranch.push_back(pRoot->i);
 		maxarray(pRoot, maxbranch);
 	}
 
 }
+
 
 void main()
 {
@@ -72,10 +72,10 @@ void main()
 		InsertToTree(pRoot, p);
 	}
 	vector<int> maxbranch;
-	
 	maxarray(pRoot, maxbranch);
-	cout << "Branch with the largest sum is: ";
-	cout << pRoot->i << " ";
+	
+	cout << "Branch with the largest sum is: " << pRoot->i << " ";
+	
 	for (int i : maxbranch) {
 		cout << i << " ";
 	}
