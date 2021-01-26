@@ -28,6 +28,74 @@ void InsertToTree(Node*& pRoot, Node* pNew)
 		InsertToTree(pRoot->pRight, pNew);
 }
 
+void DeleteNodeWithTwoChildren(Node*& q, Node*& p)
+{
+	if (p->pRight)
+	{
+		DeleteNodeWithTwoChildren(q, p->pRight);
+		return;
+	}
+
+	p->i = q->i;
+	q = p;
+	p = p->pLeft;
+}
+
+void DeleteNodeFromTree(Node*& pRoot, int i)
+{
+	if (!pRoot)
+		return;
+
+	if (pRoot->i < i)
+	{
+		DeleteNodeFromTree(pRoot->pRight, i);
+		return;
+	}
+
+	if (pRoot->i > i)
+	{
+		DeleteNodeFromTree(pRoot->pLeft, i);
+		return;
+	}
+
+	Node* q = pRoot;
+	if (!q->pRight)
+		pRoot = q->pLeft;
+	else if (!q->pLeft)
+		pRoot = q->pRight;
+	else
+		DeleteNodeWithTwoChildren(q, q->pLeft);
+
+	delete q;
+}
+
+void PrintTree(Node* pRoot, int Level)
+{
+	if (!pRoot)
+		return;
+
+	PrintTree(pRoot->pRight, Level + 1);
+
+	for (int i = 0; i < Level; i++)
+		cout << "  ";
+	cout << pRoot->i << endl;
+
+	PrintTree(pRoot->pLeft, Level + 1);
+}
+
+void Insert(Node*& pRoot, Node* pNewNode)
+{
+	if (!pRoot)
+		pRoot = pNewNode;
+	else
+	{
+		if (pNewNode->i < pRoot->i)
+			Insert(pRoot->pLeft, pNewNode);
+		else
+			Insert(pRoot->pRight, pNewNode);
+	}
+}
+
 
 int findingMax(Node* root) {
 	if (root == NULL)
